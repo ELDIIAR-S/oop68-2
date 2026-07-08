@@ -93,4 +93,3 @@ else:
         print(f"\n{player.name} победил!")
     else:
         print(f"\n{enemy.name} победил!")
-Что есть в этом решении
