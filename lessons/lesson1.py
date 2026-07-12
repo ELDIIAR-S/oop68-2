@@ -31,4 +31,4 @@ print(asuna.base_action())
 
 dasdasd
 das
-defas
+defaspy --version
