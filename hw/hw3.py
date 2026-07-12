@@ -1,50 +1,83 @@
+class BankAccount:
+
+    def __init__(self, fio, balance, login, password):
+        self.fio = fio
+        self._balance = balance
+        self.__password = password
+        self.login = login
+
+    def __get_balance(self, password):
+        if password == self.__password:
+            return self._balance
+        return "Не верный пароль !!"
+
+    def __get_random_pass(self):
+        pass
+
+    def reset_pass(self):
+        return self.__get_random_pass()
+
+
+
+
+ardager = BankAccount("Ardager Kartanbekov", 1000, "ardage_dev", "Def123")
+
+# print(dir(ardager))
+# # print(ardager._BankAccount__password)
+# # print(ardager.login)
+# print(ardager._BankAccount__get_balance("Def123"))
+# print(ardager._balance)
+
 from abc import ABC, abstractmethod
 
-
-class Hero(ABC):
-    def __init__(self, name, level, health, strength):
-        self.name = name
-        self.level = level
-        self.__health = health  # приватный атрибут
-        self.strength = strength
-
-    def greet(self):
-        print(f"Привет, я {self.name}, мой уровень {self.level}")
-
-    def rest(self):
-        print(f"{self.name} отдыхает")
-        self.__health += 1
-
+# Абстрактный класс
+class Animal(ABC):
     @abstractmethod
-    def attack(self):
+    def make_sound(self):
+        pass
+    @abstractmethod
+    def move(self):
         pass
 
 
-class Warrior(Hero):
-    def attack(self):
-        print(f"{self.name} атакует мечом")
+class Cat(Animal):
+    def make_sound(self):
+        return "MAy may"
+    def move(self):
+        return "Step"
+
+class Dog(Animal):
+    def move(self):
+        return 'Step'
+    def make_sound(self):
+        return "Gaf Gaf"
+
+# tuzik = Dog()
+# garfild = Cat()
 
 
-class Mage(Hero):
-    def attack(self):
-        print(f"{self.name} использует магию")
 
 
-class Assassin(Hero):
-    def attack(self):
-        print(f"{self.name} атакует из-под тишка")
 
 
-# Создание объектов
-warrior = Warrior("Артур", 10, 100, 20)
-mage = Mage("Мерлин", 12, 80, 30)
-assassin = Assassin("Эцио", 11, 90, 25)
 
-# Вызов методов
-heroes = [warrior, mage, assassin]
+class SendOTP(ABC):
+    @abstractmethod
+    def send_sms_otp(self, otp, phone):
+        pass
 
-for hero in heroes:
-    hero.greet()
-    hero.attack()
-    hero.rest()
-    print()
+class KgOTP(SendOTP):
+
+    def send_sms_otp(self, otp, phone):
+        data = f'''
+            <Text>Ваш временный пароль: {otp}</Text>
+            <Phone>{phone}</Phone>
+        '''
+
+class RuOTP(SendOTP):
+
+    def send_sms_otp(self, otp, phone):
+        data = {
+            "text": f"Ваш временный пароль {otp}",
+            "phone": f"{phone}"
+        }
